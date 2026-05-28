@@ -311,6 +311,8 @@ async def new_ticket_webhook(payload: TicketWebhookIn) -> Dict[str, str]:
         )
         print(f"✅ Ticket stored: {payload.message_id}, model={used_model}")
 
+        telegram_status = "skipped (low urgency / not a complaint)"
+
         if urgency == "Высокая" or category == "Жалоба":
             try:
                 send_telegram_alert(
@@ -323,8 +325,10 @@ async def new_ticket_webhook(payload: TicketWebhookIn) -> Dict[str, str]:
                     urgency=urgency,
                 )
                 print(f"📣 Telegram alert sent: {payload.message_id}")
+                telegram_status = "sent_successfully"
             except Exception as tg_error:
                 print(f"⚠️ Telegram alert failed: {tg_error}")
+                telegram_status = f"failed_to_send ({str(tg_error)[:50]})"
 
         return {
             "status": "ok",
@@ -332,6 +336,7 @@ async def new_ticket_webhook(payload: TicketWebhookIn) -> Dict[str, str]:
             "model": used_model,
             "category": category,
             "urgency": urgency,
+            "telegram_notification": telegram_status,
         }
     except HTTPException:
         raise
