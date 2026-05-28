@@ -343,6 +343,5 @@ async def new_ticket_webhook(payload: TicketWebhookIn) -> Dict[str, str]:
 
 
 if __name__ == "__main__":
-    host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", "8000"))
-    uvicorn.run("app:app", host=host, port=port, reload=False)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port)
