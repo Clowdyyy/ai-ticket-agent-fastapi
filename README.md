@@ -100,3 +100,5 @@ Invoke-RestMethod -Uri "[http://127.0.0.1:8000/webhook/new-ticket](http://127.0.
 
 ## 📸 System Demonstration
 Upon detecting a critical request (such as a complaint or a high-urgency issue), the AI agent automatically classifies the ticket, and the bot instantly sends a structured notification to the managers in Telegram:
+
+<img src="images/tg_alert.png" width="350" alt="Telegram Alert Demo">
